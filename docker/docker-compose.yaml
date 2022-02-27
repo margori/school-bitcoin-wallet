@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  node:
+    container_name: node
+    image: node
+    build:
+        context: .
+        dockerfile: Dockerfile-node
+    ports:
+      - 18332:18332
+    environment:
+      BLOCK_INTERVAL_IN_SECONDS: 20

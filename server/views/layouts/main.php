@@ -76,14 +76,6 @@ $bundleMD5 = md5_file($bundlePath);
             <?= $content ?>
         </div>
     </main>
-
-    <footer class="footer mt-auto py-3 text-muted">
-        <div class="container">
-            <p class="float-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="float-right"><?= Yii::powered() ?></p>
-        </div>
-    </footer>
-
     <?php $this->endBody() ?>
 </body>
 

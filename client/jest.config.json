@@ -1,0 +1,34 @@
+{
+  "coverageDirectory": "./reports/coverage",
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "<rootDir>/src/locales/"
+  ],
+  "roots": [
+    "<rootDir>/src/"
+  ],
+  "snapshotSerializers": [
+  ],
+  "setupFilesAfterEnv": [
+    "<rootDir>/jest-setup.js"
+  ],
+  "testEnvironment": "jsdom",
+  "testEnvironmentOptions": {
+  },
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "outputDirectory": "./reports/junit"
+      }
+    ],
+    [
+      "jest-html-reporters",
+      {
+        "publicPath": "./reports/html",
+        "filename": "report.html"
+      }
+    ]
+  ]
+}

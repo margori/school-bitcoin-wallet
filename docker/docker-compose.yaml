@@ -21,3 +21,31 @@ services:
       - ../server:/var/www/html
     ports:
       - "8080:80"
+    environment:
+      MYSQL_HOST: 'db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_DATABASE: 'school-bitcoin-wallet'
+    depends_on:
+      - node
+      - db
+
+  db:
+    container_name: db
+    image: mysql:8
+    tmpfs: /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_DATABASE: 'school-bitcoin-wallet'
+
+  myadmin:
+    container_name: myadmin
+    image: phpmyadmin
+    environment:
+      PMA_HOST: 'db'
+      PMA_USER: 'root'
+      PMA_PASSWORD: 'secret'
+    depends_on:
+      - db
+    ports:
+      - "8081:80"

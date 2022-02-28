@@ -10,3 +10,14 @@ services:
       - 18332:18332
     environment:
       BLOCK_INTERVAL_IN_SECONDS: 20
+
+  web:
+    container_name: web
+    image: web
+    build:
+      context: .
+      dockerfile: Dockerfile-web
+    volumes:
+      - ../server:/var/www/html
+    ports:
+      - "8080:80"

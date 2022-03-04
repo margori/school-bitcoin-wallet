@@ -1,7 +1,5 @@
 <?php
 
-var_dump("dddsd");
-
 $host = getenv('MYSQL_HOST');
 $db = getenv('MYSQL_DATABASE');
 $user = getenv('MYSQL_USER');

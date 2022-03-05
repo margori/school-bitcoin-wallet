@@ -61,6 +61,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::$app->response->statusCode = 200;
         return $this->render('index');
     }
 

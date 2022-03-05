@@ -2,7 +2,9 @@
 
 namespace app\modules\api\controllers;
 
-class PingController extends \yii\web\Controller
+use yii\helpers\Json;
+
+class ErrorController extends \yii\web\Controller
 {
   public $enableCsrfValidation = false;
 
@@ -13,8 +15,8 @@ class PingController extends \yii\web\Controller
    */
   public function actionIndex()
   {
-    \Yii::$app->response->statusCode = 200;
+    \Yii::$app->response->statusCode = 404;
     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    return "ok";
+    return "error";
   }
 }

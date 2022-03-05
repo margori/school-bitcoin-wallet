@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const Header = ({ loggedIn, fullname }) => {
+const Header = ({ loggedIn, username }) => {
     return (
         <Navbar collapseOnSelect bg="light" expand="lg">
             <Navbar.Brand>
@@ -27,7 +27,7 @@ const Header = ({ loggedIn, fullname }) => {
                     )}
                     {loggedIn && (
                         <NavDropdown
-                            title={`${t`Welcome`}, ${fullname}`}
+                            title={`Welcome, ${username}`}
                             id="basic-nav-dropdown"
                         >
                             <LinkContainer id="user-data" to="/user/my-data">
@@ -54,6 +54,7 @@ const Header = ({ loggedIn, fullname }) => {
 
 const mapStateToProps = (state) => ({
     loggedIn: state.user.loggedIn,
+    username: state.user.username,
 });
 
 export default connect(mapStateToProps)(Header);

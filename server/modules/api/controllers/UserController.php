@@ -3,6 +3,7 @@
 namespace app\modules\api\controllers;
 
 use app\common\Constants;
+use app\models\LoginForm;
 use app\models\User;
 use Yii;
 
@@ -21,7 +22,6 @@ class UserController extends \yii\web\Controller
     $user->generateAuthKey();
 
     if (!$user->setPassword(Yii::$app->request->post("password"))) {
-      Yii::debug("!setPassword");
       Yii::$app->response->statusCode = 401;
       return [
         Constants::RESULT => Constants::ERROR,
@@ -54,6 +54,51 @@ class UserController extends \yii\web\Controller
     return [
       Constants::RESULT => Constants::OK,
       Constants::MESSAGE => Yii::t('app', 'Registration successful.'),
+    ];
+  }
+
+  public function actionLogin()
+  {
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    Yii::$app->response->statusCode = 400;
+
+    $loginForm = new LoginForm();
+    $loginForm->username = Yii::$app->request->post("username");
+    $loginForm->password = Yii::$app->request->post("password");
+
+    if (!$loginForm->login()) {
+      Yii::$app->response->statusCode = 403;
+      return [
+        Constants::RESULT => Constants::ERROR,
+        Constants::MESSAGE => $loginForm->getErrors('username'),
+      ];
+    }
+
+    Yii::$app->response->statusCode = 200;
+    return [
+      Constants::RESULT => Constants::OK,
+      Constants::MESSAGE => Yii::t('app', 'Loggin successful.'),
+      Constants::DATA => $loginForm->getUser()
+    ];
+  }
+
+  public function actionLogout()
+  {
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    Yii::$app->response->statusCode = 400;
+
+    if (!Yii::$app->user->logout()) {
+      Yii::$app->response->statusCode = 500;
+      return [
+        Constants::RESULT => Constants::ERROR,
+        Constants::MESSAGE => 'Error while logging out',
+      ];
+    }
+
+    Yii::$app->response->statusCode = 200;
+    return [
+      Constants::RESULT => Constants::OK,
+      Constants::MESSAGE => Yii::t('app', 'Logout successful.'),
     ];
   }
 }

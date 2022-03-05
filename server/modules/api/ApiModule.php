@@ -20,6 +20,7 @@ class ApiModule extends \yii\base\Module
                 ],
                 'request' => [
                     'class' => Request::class,
+                    'cookieValidationKey' => 'h1Nln8IzUdNozyc7WxaoX-zv3vFutqe2',
                     'parsers' => [
                         'application/json' => JsonParser::class,
                     ]

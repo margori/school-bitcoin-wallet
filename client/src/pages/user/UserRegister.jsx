@@ -19,7 +19,6 @@ const UserRegister = ({ history }) => {
             .then((response) => {
                 actions.setSubmitting(false);
                 setSuccessMessage(response.data.message);
-                history.push('/');
             })
             .catch((error) => {
                 actions.setSubmitting(false);

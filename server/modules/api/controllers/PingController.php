@@ -2,6 +2,9 @@
 
 namespace app\modules\api\controllers;
 
+use app\common\Constants;
+use Yii;
+
 class PingController extends \yii\web\Controller
 {
   public $enableCsrfValidation = false;
@@ -15,6 +18,9 @@ class PingController extends \yii\web\Controller
   {
     \Yii::$app->response->statusCode = 200;
     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    return "ok";
+    return [
+      Constants::RESULT => "ok",
+      "isGuest" => Yii::$app->user->isGuest
+    ];
   }
 }

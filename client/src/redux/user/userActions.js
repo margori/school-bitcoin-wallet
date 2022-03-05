@@ -3,9 +3,9 @@ export const UserActionTypes = {
     LOGOUT: "LOGOUT",
 };
 
-export const login = (token) => ({
+export const login = (user) => ({
     type: UserActionTypes.LOGIN,
-    token
+    user
 });
 
 export const logout = () => ({

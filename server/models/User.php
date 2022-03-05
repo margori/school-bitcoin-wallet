@@ -13,6 +13,7 @@ use yii\web\IdentityInterface;
  * @package app\models
  * @property integer id
  * @property string username
+ * @property string $auth_key
  * @property string password_hash
  * @property integer created_at
  * @property integer updated_at
@@ -31,7 +32,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function init()
     {
         parent::init();
-        $this->is_administrator = false;
     }
 
     /**
@@ -62,8 +62,6 @@ class User extends ActiveRecord implements IdentityInterface
             [['password', 'password_confirm'], 'required', 'on' => self::PASSWORD],
             [['username', 'password', 'password_confirm', 'resetPassword'], 'safe'],
             ['username', 'unique'],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['password_confirm', 'compare', 'compareAttribute' => 'password'],
         ];
     }
@@ -79,8 +77,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByName($name)
     {
         return self::find()
-            ->where(['like', 'username', $name])
-            ->andWhere(['status' => self::STATUS_ACTIVE]);
+            ->where(['like', 'username', $name]);
     }
 
     public function attributeLabels()
@@ -109,26 +106,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username]);
     }
 
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
 
     public function beforeSave($insert)
     {
@@ -142,23 +122,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
         $this->afterFind();
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return boolean
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        $parts = explode('_', $token);
-        $timestamp = (int)end($parts);
-        return $timestamp + $expire >= time();
     }
 
     /**
@@ -204,6 +167,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function setPassword($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        return true;
     }
 
     /**
@@ -212,21 +176,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
     }
 }

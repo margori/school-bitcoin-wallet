@@ -17,11 +17,12 @@ class m220228_225214_add_user_tables extends Migration
         }
 
         $this->createTable('{{%user}}', [
-            'id' => Schema::TYPE_PK,
-            'username' => Schema::TYPE_STRING . ' NOT NULL',
+            'id' => $this->primaryKey(),
+            'username' => $this->string()->notNull()->unique(),
             'password_hash' => Schema::TYPE_STRING . ' NOT NULL',
-            'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'auth_key' => $this->string(32)->notNull(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
     }
 

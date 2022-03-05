@@ -9,6 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -24,13 +25,14 @@ $bundleMD5 = md5_file($bundlePath);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="shortcut icon" href="<?= Url::base(true) ?>/favicon.ico" type="image/x-icon" />
     <script>
         window.defaults = {
-            backendUrl: "<?= Yii::$app->request->baseUrl ?>/"
-            apiUrl: "<?= Yii::$app->request->baseUrl ?>/api/"
+            backendUrl: "<?= Url::base(true) ?>/",
+            apiUrl: "<?= Url::base(true) ?>/api/"
         };
     </script>
-    <script src="<?= Yii::$app->request->baseUrl ?>/bundle.js?m=<?= $bundleMD5 ?>"></script>
+    <script src="<?= Url::base(true) ?>/bundle.js?m=<?= $bundleMD5 ?>"></script>
     <?php $this->head() ?>
 </head>
 

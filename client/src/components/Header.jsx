@@ -26,24 +26,28 @@ const Header = ({ loggedIn, username }) => {
                         </LinkContainer>
                     )}
                     {loggedIn && (
-                        <NavDropdown
-                            title={`Welcome, ${username}`}
-                            id="basic-nav-dropdown"
-                        >
-                            <LinkContainer id="user-data" to="/user/my-data">
-                                <Nav.Link>My Data</Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer
-                                id="user-password"
-                                to="/user/my-password"
-                            >
-                                <Nav.Link>My Password</Nav.Link>
-                            </LinkContainer>
-                        </NavDropdown>
-                    )}
-                    {loggedIn && (
                         <LinkContainer id="logout" to="/user/logout">
                             <Nav.Link>Logout</Nav.Link>
+                        </LinkContainer>
+                    )}
+                    {loggedIn && (
+                        <LinkContainer id="logout" to="/wallet/balance">
+                            <Nav.Link>Balance</Nav.Link>
+                        </LinkContainer>
+                    )}
+                    {loggedIn && (
+                        <LinkContainer id="addresses" to="/wallet/addresses">
+                            <Nav.Link>Addresses</Nav.Link>
+                        </LinkContainer>
+                    )}
+                    {loggedIn && (
+                        <LinkContainer id="logout" to="/wallet/send">
+                            <Nav.Link>Send</Nav.Link>
+                        </LinkContainer>
+                    )}
+                    {loggedIn && (
+                        <LinkContainer id="logout" to="/wallet/receive">
+                            <Nav.Link>Receive</Nav.Link>
                         </LinkContainer>
                     )}
                 </Nav>

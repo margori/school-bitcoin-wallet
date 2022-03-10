@@ -1,12 +1,11 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
+import { Lock } from '@styled-icons/fa-solid/Lock';
+import { LockOpen } from '@styled-icons/fa-solid/LockOpen';
 
 const Header = ({ loggedIn, username, password }) => {
     return (
@@ -58,14 +57,14 @@ const Header = ({ loggedIn, username, password }) => {
                     {loggedIn && password && (
                         <LinkContainer id="lock" to="/wallet/lock">
                             <Nav.Link>
-                                <FontAwesomeIcon icon={faUnlock} />
+                                <LockOpen size="24" title="Lock wallet" />
                             </Nav.Link>
                         </LinkContainer>
                     )}
                     {loggedIn && !password && (
                         <LinkContainer id="unlock" to="/wallet/unlock">
                             <Nav.Link>
-                                <FontAwesomeIcon icon={faLock} />
+                                <Lock size="24" title="Unlock wallet" />
                             </Nav.Link>
                         </LinkContainer>
                     )}

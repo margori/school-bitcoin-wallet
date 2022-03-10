@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     loggedIn: false,
     user_id: 0,
     username: '',
+    password_hash: '',
 };
 
 export const userReducer = (state, action) => {
@@ -15,6 +16,7 @@ export const userReducer = (state, action) => {
                 loggedIn: true,
                 user_id: action.user.user_id,
                 username: action.user.username,
+                password_hash: action.user.password_hash,
             };
         case UserActionTypes.LOGOUT:
             return {
@@ -22,6 +24,7 @@ export const userReducer = (state, action) => {
                 loggedIn: false,
                 user_id: 0,
                 username: '',
+                password_hash: '',
             };
         default:
             return state;

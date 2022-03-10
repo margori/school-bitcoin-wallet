@@ -5,7 +5,7 @@ import { postRegister } from '../../endpoints/User';
 import { RegisterSchema } from '../../schemas/RegisterSchema';
 import { UserRegisterForm } from './UserRegisterForm';
 
-const UserRegister = ({ history }) => {
+const UserRegister = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -46,8 +46,4 @@ const UserRegister = ({ history }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    language: state.user.language,
-});
-
-export default connect(mapStateToProps)(UserRegister);
+export default connect()(UserRegister);

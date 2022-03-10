@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { postLogout } from '../../endpoints/User';
 import { logout } from '../../redux/user/userActions';
+import { lock } from '../../redux/wallet/walletActions';
 
-const UserLogout = ({ dispatchLogout }) => {
+const UserLogout = ({ dispatchLogout, dispatchLock }) => {
     let navigate = useNavigate();
 
     postLogout()
         .then(() => {
             dispatchLogout();
+            dispatchLock();
             navigate('/', { replace: true });
         })
         .catch((error) => {
@@ -25,6 +27,7 @@ const UserLogout = ({ dispatchLogout }) => {
 
 const mapDispatchToProps = (dispatch) => ({
     dispatchLogout: () => dispatch(logout()),
+    dispatchLock: () => dispatch(lock()),
 });
 
 export default connect(null, mapDispatchToProps)(UserLogout);

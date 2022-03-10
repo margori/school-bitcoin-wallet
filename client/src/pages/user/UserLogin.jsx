@@ -6,6 +6,7 @@ import { postLogin } from '../../endpoints/User';
 import { LoginSchema } from '../../schemas/LoginSchema';
 import { login } from '../../redux/user/userActions';
 import { useNavigate } from 'react-router';
+import sha1 from 'crypto-js/sha1';
 
 export const processGetMyDataResponse = (data) => ({
     username: data.username,
@@ -30,6 +31,7 @@ const UserLogin = ({ dispatchLogin }) => {
                 setSuccessMessage(`Login successful`);
                 actions.setSubmitting(false);
                 const user = processGetMyDataResponse(response.data.data);
+                user.password_hash = sha1(values.password).toString();
                 dispatchLogin(user);
                 navigate('/', { replace: true });
             })
@@ -60,12 +62,8 @@ const UserLogin = ({ dispatchLogin }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    returnPath: state.user.returnPath,
-});
-
 const mapDispatchToProps = (dispatch) => ({
     dispatchLogin: (user) => dispatch(login(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
+export default connect(null, mapDispatchToProps)(UserLogin);

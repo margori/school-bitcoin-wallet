@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { createAddress } from '../../utils/addressUtils';
 
-const WalletNewAddress = ({}) => (
-    <div>
-        <Container fluid={true} className="text-center">
-            <h2>New Address</h2>
-        </Container>
-    </div>
-);
+const WalletNewAddress = ({ password }) => {
+    let navigate = useNavigate();
+
+    if (password) {
+        const newAddress = createAddress();
+        console.log(newAddress);
+    } else {
+        useEffect(() => {
+            navigate('/wallet/unlock', { replace: true });
+        });
+    }
+
+    return (
+        <div className="user-logout-page col-md-12">
+            Creating new address and redirecting...
+        </div>
+    );
+};
 
 const mapStateToProps = (state) => ({
-    returnPath: state.user.returnPath,
+    password: state.wallet.password,
 });
 
 const mapDispatchToProps = (dispatch) => ({});

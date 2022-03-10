@@ -1,7 +1,8 @@
-import * as Yup from "yup";
-import { passwordField, usernameField } from "./UserFields";
+import * as Yup from 'yup';
+import { passwordField } from './PasswordFields';
+import { usernameField } from './UserFields';
 
 export const LoginSchema = Yup.object().shape({
     username: usernameField,
-    password: passwordField
+    password: passwordField,
 });

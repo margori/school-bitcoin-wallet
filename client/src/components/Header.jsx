@@ -5,8 +5,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
 
-const Header = ({ loggedIn, username }) => {
+const Header = ({ loggedIn, username, password }) => {
     return (
         <Navbar collapseOnSelect bg="light" expand="lg">
             <Navbar.Brand>
@@ -24,6 +26,9 @@ const Header = ({ loggedIn, username }) => {
                         <LinkContainer id="register" to="/user/register">
                             <Nav.Link>Register</Nav.Link>
                         </LinkContainer>
+                    )}
+                    {loggedIn && (
+                        <Navbar.Text>{`Welcome, ${username}`}</Navbar.Text>
                     )}
                     {loggedIn && (
                         <LinkContainer id="logout" to="/user/logout">
@@ -50,6 +55,20 @@ const Header = ({ loggedIn, username }) => {
                             <Nav.Link>Receive</Nav.Link>
                         </LinkContainer>
                     )}
+                    {loggedIn && password && (
+                        <LinkContainer id="lock" to="/wallet/lock">
+                            <Nav.Link>
+                                <FontAwesomeIcon icon={faUnlock} />
+                            </Nav.Link>
+                        </LinkContainer>
+                    )}
+                    {loggedIn && !password && (
+                        <LinkContainer id="unlock" to="/wallet/unlock">
+                            <Nav.Link>
+                                <FontAwesomeIcon icon={faLock} />
+                            </Nav.Link>
+                        </LinkContainer>
+                    )}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
@@ -59,6 +78,7 @@ const Header = ({ loggedIn, username }) => {
 const mapStateToProps = (state) => ({
     loggedIn: state.user.loggedIn,
     username: state.user.username,
+    password: state.wallet.password,
 });
 
 export default connect(mapStateToProps)(Header);

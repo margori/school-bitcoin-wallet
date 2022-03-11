@@ -3,6 +3,7 @@ import { WalletActionTypes } from './walletActions';
 const INITIAL_STATE = {
     password: '',
     wifs: [],
+    addresses: [],
 };
 
 export const walletReducer = (state, action) => {
@@ -13,6 +14,7 @@ export const walletReducer = (state, action) => {
                 ...state,
                 password: '',
                 wifs: [],
+                addresses: [],
             };
         case WalletActionTypes.UNLOCK:
             return {
@@ -26,6 +28,16 @@ export const walletReducer = (state, action) => {
             return {
                 ...state,
                 wifs: [...state.wifs, action.wif],
+            };
+        case WalletActionTypes.SET_WIFS:
+            return {
+                ...state,
+                wifs: [...action.wifs],
+            };
+        case WalletActionTypes.SET_ADDRESSES:
+            return {
+                ...state,
+                addresses: [...action.addresses],
             };
         default:
             return state;

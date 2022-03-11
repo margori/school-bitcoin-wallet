@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { addressesFromWifs } from '../../utils/addressUtils';
 
-const WalletAddresses = ({ wifs }) => (
+const WalletAddresses = ({ addresses }) => (
     <div>
         <Container fluid={true} className="text-center">
             <h2>Addresses</h2>
@@ -17,7 +17,7 @@ const WalletAddresses = ({ wifs }) => (
                     New Address
                 </Link>
             </h3>
-            {addressesFromWifs(wifs).map((address, key) => (
+            {addresses.map((address, key) => (
                 <p key={key}>{address}</p>
             ))}
         </Container>
@@ -25,7 +25,7 @@ const WalletAddresses = ({ wifs }) => (
 );
 
 const mapStateToProps = (state) => ({
-    wifs: state.wallet.wifs,
+    addresses: state.wallet.addresses,
 });
 
 export default connect(mapStateToProps)(WalletAddresses);

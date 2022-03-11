@@ -45,4 +45,18 @@ class WalletController extends \yii\web\Controller
       Constants::MESSAGE => Yii::t('app', 'Wif saved.'),
     ];
   }
+
+
+  public function actionGetWifs()
+  {
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+    $wifs =  Wif::findAll(['user_id' => Yii::$app->user->identity->id]);
+
+    Yii::$app->response->statusCode = 200;
+    return [
+      Constants::RESULT => Constants::OK,
+      Constants::DATA => array_column($wifs, 'wif'),
+    ];
+  }
 }

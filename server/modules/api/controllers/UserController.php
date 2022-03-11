@@ -31,7 +31,6 @@ class UserController extends \yii\web\Controller
 
     $transaction = Yii::$app->db->beginTransaction();
     try {
-      Yii::debug("1");
       if (!$user->save()) {
         $transaction->rollBack();
         return [

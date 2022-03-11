@@ -1,13 +1,14 @@
 const bitcore = require('bitcore-lib');
 
-export const createAddress = () => {
+export const createWif = () => {
     bitcore.Networks.enableRegtest();
-
     const privateKey = new bitcore.PrivateKey(null, bitcore.Networks.regtest);
-    return {
-        privateKeyString: privateKey.toString(),
-        privateKeyWif: privateKey.toWIF(),
-        publicKey: privateKey.toPublicKey().toString(),
-        address: privateKey.toAddress().toString(),
-    };
+    return privateKey.toWIF();
+};
+
+export const addressFormWif = (wif) => {
+    const privateKey = bitcore.PrivateKey.fromWIF(wif);
+    const publicKey = new bitcore.PublicKey(privateKey);
+    const address = new bitcore.Address(publicKey, bitcore.Networks.regtest);
+    return address.toString();
 };

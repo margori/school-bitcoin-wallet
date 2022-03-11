@@ -1,7 +1,8 @@
 import { WalletActionTypes } from './walletActions';
 
 const INITIAL_STATE = {
-    password: ''
+    password: '',
+    wifs: [],
 };
 
 export const walletReducer = (state, action) => {
@@ -11,11 +12,20 @@ export const walletReducer = (state, action) => {
             return {
                 ...state,
                 password: '',
+                wifs: [],
             };
         case WalletActionTypes.UNLOCK:
             return {
                 ...state,
                 password: action.password,
+            };
+        case WalletActionTypes.ADD_WIF:
+            if (!state.wifs) {
+                state.wifs = [];
+            }
+            return {
+                ...state,
+                wifs: [...state.wifs, action.wif],
             };
         default:
             return state;

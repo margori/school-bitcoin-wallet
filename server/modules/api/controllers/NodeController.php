@@ -17,14 +17,39 @@ class NodeController extends \yii\web\Controller
 
     $bitcoind = new BitcoinClient('http://test:test@node:18332/');
 
-    $utxos = $bitcoind->listunspent(6, 999999999, $addresses);
-    Yii::debug($utxos->toArray());
+    $balance = 0;
+    $utxos = [];
+    foreach ($addresses as $address) {
+      $rawResult = $bitcoind->scantxoutset("start",  ['addr(' . $address . ')']);
+      $result = $rawResult->toArray();
+      $utxos =  array_merge($utxos, $result['unspents']);
+      $balance +=  $result['total_amount'] * 100000000;
+    }
 
     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     Yii::$app->response->statusCode = 200;
     return [
       Constants::RESULT => Constants::OK,
-      Constants::DATA => $utxos->toArray()
+      Constants::DATA => [
+        'balance' => $balance,
+        'utxos' => $utxos
+      ]
+    ];
+  }
+
+  public function actionFund()
+  {
+    $address = Yii::$app->request->post("address");
+
+    $bitcoind = new BitcoinClient('http://test:test@node:18332/');
+
+    $result =  $bitcoind->sendtoaddress($address, 0.1, "fund", "fund", false, true, 6, 'economical');
+    Yii::debug($result);
+
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    Yii::$app->response->statusCode = 200;
+    return [
+      Constants::RESULT => Constants::OK,
     ];
   }
 }

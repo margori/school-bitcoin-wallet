@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { addressesFromWifs } from '../../utils/addressUtils';
 
 const WalletAddresses = ({ addresses }) => (
     <div>

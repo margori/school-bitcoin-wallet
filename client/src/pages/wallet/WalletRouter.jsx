@@ -8,10 +8,12 @@ import WalletReceive from './WalletReceive';
 import WalletSend from './WalletSend';
 import WalletUnlock from './WalletUnlock';
 import WalletLock from './WalletLock';
+import WalletFund from './WalletFund';
 
 const WalletRouter = () => (
     <Routes>
         <Route path="/balance" element={<WalletBalance />} />
+        <Route path="/fund" element={<WalletFund />} />
         <Route path="/addresses" element={<WalletAddresses />} />
         <Route path="/new-address" element={<WalletNewAddress />} />
         <Route path="/send" element={<WalletSend />} />

@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { fetchUtxos } from '../../endpoints/Node';
-
-const calculateBalance = (data) => {
-    return 0;
-};
+import { Link } from 'react-router-dom';
+const bitcore = require('bitcore-lib');
 
 const WalletBalance = ({ addresses }) => {
     const [balance, setBalance] = useState(-1);
@@ -13,8 +11,10 @@ const WalletBalance = ({ addresses }) => {
     if (balance < 0) {
         fetchUtxos({ addresses })
             .then((response) => {
-                const newBalance = calculateBalance(response.data);
-                setBalance(newBalance);
+                const balance = bitcore.Unit.fromSatoshis(
+                    response.data.data.balance
+                ).toBTC();
+                setBalance(balance);
             })
             .catch((e) => {
                 console.log(e);
@@ -25,7 +25,14 @@ const WalletBalance = ({ addresses }) => {
         <div>
             <Container fluid={true} className="text-center">
                 <h2>Balance</h2>
-                <p>{balance < 0 ? 'Loading...' : balance}</p>
+                <h3>{balance < 0 ? 'Loading...' : balance}</h3>
+                <Link
+                    id="action-fund"
+                    className="btn btn-success btn-sm"
+                    to="/wallet/fund"
+                >
+                    Fund
+                </Link>
             </Container>
         </div>
     );

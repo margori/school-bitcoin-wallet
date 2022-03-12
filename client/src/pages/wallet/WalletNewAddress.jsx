@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { postSaveWif } from '../../endpoints/Wallet';
 import { addWif } from '../../redux/wallet/walletActions';
-import { createWif } from '../../utils/addressUtils';
+import { createWif, addressFromWif } from '../../utils/addressUtils';
 import CryptoJS from 'crypto-js';
 
 const saveWif = (wif, password) => {
@@ -11,13 +11,15 @@ const saveWif = (wif, password) => {
     return postSaveWif({ wif: safeWif });
 };
 
-const WalletNewAddress = ({ password, dispatchAddWif }) => {
+const WalletNewAddress = ({ password, dispatchAddWif, dispatchAddAddress }) => {
     let navigate = useNavigate();
 
     if (password) {
         const newWif = createWif();
         saveWif(newWif, password)
             .then(() => {
+                const newAddress = addressFromWif(newWif);
+                dispatchAddAddress(newAddress);
                 dispatchAddWif(newWif);
                 navigate('/wallet/addresses', { replace: true });
             })
@@ -44,6 +46,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     dispatchAddWif: (wif) => {
         dispatch(addWif(wif));
+    },
+    dispatchAddAddress: (address) => {
+        dispatch(addAddress(address));
     },
 });
 

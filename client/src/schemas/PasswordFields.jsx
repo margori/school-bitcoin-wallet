@@ -1,11 +1,8 @@
-import * as Yup from 'yup';
-import {
-    isGoodPassword,
-    maxPasswordLength,
-    minPasswordLength,
-} from '../utils/isUtils';
+import { string } from 'yup';
+import { maxPasswordLength, minPasswordLength } from './fieldConstants';
+import { isGoodPassword } from './isUtils';
 
-export const passwordField = Yup.string()
+export const passwordField = string()
     .required('Password is required!')
     .min(minPasswordLength, 'Password is too short!')
     .max(maxPasswordLength, 'Password is too long!')

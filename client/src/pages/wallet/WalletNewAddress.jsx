@@ -11,7 +11,7 @@ const saveWif = (wif, password) => {
     return postSaveWif({ wif: safeWif });
 };
 
-const WalletNewAddress = ({ password, dispatchAddWif, dispatchAddAddress }) => {
+const WalletNewAddress = ({ password, dispatchAddAddress }) => {
     let navigate = useNavigate();
 
     if (password) {
@@ -20,7 +20,6 @@ const WalletNewAddress = ({ password, dispatchAddWif, dispatchAddAddress }) => {
             .then(() => {
                 const newAddress = addressFromWif(newWif);
                 dispatchAddAddress(newAddress);
-                dispatchAddWif(newWif);
                 navigate('/wallet/addresses', { replace: true });
             })
             .catch(() => {
@@ -44,9 +43,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    dispatchAddWif: (wif) => {
-        dispatch(addWif(wif));
-    },
     dispatchAddAddress: (address) => {
         dispatch(addAddress(address));
     },

@@ -9,7 +9,7 @@ echo ""
 echo "Installing client packages and build..."
 echo ""
 cd client
-npm ci
+npm i
 npm run build
 cd ..
 

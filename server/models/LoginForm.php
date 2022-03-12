@@ -31,8 +31,8 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('user', 'Username'),
-            'password' => Yii::t('user', 'Password'),
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
         ];
     }
 
@@ -50,9 +50,9 @@ class LoginForm extends Model
 
             if (!$user) {
                 usleep(500000);
-                $this->addError($attribute, Yii::t('user', 'Incorrect username or password.'));
+                $this->addError($attribute, Yii::t('app', 'Incorrect username or password.'));
             } else if (!$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('user', 'Incorrect username or password.'));
+                $this->addError($attribute, Yii::t('app', 'Incorrect username or password.'));
             }
         }
     }

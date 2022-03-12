@@ -16,16 +16,6 @@ export const unlock = (password) => ({
     password,
 });
 
-export const addWif = (wif) => ({
-    type: WalletActionTypes.ADD_WIF,
-    wif,
-});
-
-export const setWifs = (wifs) => ({
-    type: WalletActionTypes.SET_WIFS,
-    wifs,
-});
-
 export const addAddress = (address) => ({
     type: WalletActionTypes.ADD_ADDRESS,
     address,

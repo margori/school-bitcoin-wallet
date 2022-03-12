@@ -1,8 +1,8 @@
-import * as Yup from 'yup';
+import { object } from 'yup';
 import { passwordField } from './PasswordFields';
 import { usernameField } from './UserFields';
 
-export const LoginSchema = Yup.object().shape({
+export const LoginSchema = object({
     username: usernameField,
     password: passwordField,
 });

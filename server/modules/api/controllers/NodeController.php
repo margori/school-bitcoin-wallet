@@ -22,8 +22,12 @@ class NodeController extends \yii\web\Controller
     foreach ($addresses as $address) {
       $rawResult = $bitcoind->scantxoutset("start",  ['addr(' . $address . ')']);
       $result = $rawResult->toArray();
-      $utxos =  array_merge($utxos, $result['unspents']);
       $balance +=  $result['total_amount'] * 100000000;
+
+      foreach ($result['unspents'] as $unspent) {
+        $unspent['address'] = $address;
+        $utxos[] = $unspent;
+      }
     }
 
     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

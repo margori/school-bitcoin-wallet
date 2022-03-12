@@ -21,20 +21,6 @@ export const walletReducer = (state, action) => {
                 ...state,
                 password: action.password,
             };
-        case WalletActionTypes.ADD_WIF:
-            if (!state.wifs) {
-                state.wifs = [];
-            }
-            return {
-                ...state,
-                wifs: [...state.wifs, action.wif],
-            };
-        case WalletActionTypes.SET_WIFS:
-            return {
-                ...state,
-                wifs: [...action.wifs],
-            };
-
         case WalletActionTypes.ADD_ADDRESS:
             if (!state.addresses) {
                 state.addresses = [];

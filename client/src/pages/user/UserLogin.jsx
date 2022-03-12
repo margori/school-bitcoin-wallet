@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import sha1 from 'crypto-js/sha1';
 import { getWifs } from '../../endpoints/Wallet';
 import CryptoJS from 'crypto-js';
-import { setAddresses, setWifs } from '../../redux/wallet/walletActions';
+import { setAddresses } from '../../redux/wallet/walletActions';
 import { addressesFromWifs } from '../../utils/addressUtils';
 
 export const processGetMyDataResponse = (data) => ({

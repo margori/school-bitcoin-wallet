@@ -1,7 +1,4 @@
-export const minUsernameLength = 3;
-export const maxUsernameLength = 200;
-export const minPasswordLength = 8;
-export const maxPasswordLength = 200;
+import { maxPasswordLength, maxUsernameLength, minPasswordLength, minUsernameLength } from "./fieldConstants";
 
 export const isNumber = (c) => c >= '0' && c <= '9';
 export const isUpperCase = (c) =>

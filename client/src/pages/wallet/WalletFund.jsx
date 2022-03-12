@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { postFund } from '../../endpoints/Node';
-import { lock } from '../../redux/wallet/walletActions';
 
 const WalletFund = ({ addresses }) => {
     let navigate = useNavigate();

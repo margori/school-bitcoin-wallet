@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'react-bootstrap';
-import { addressesFromWifs } from '../../utils/addressUtils';
 import { fetchUtxos } from '../../endpoints/Node';
 
 const calculateBalance = (data) => {
     return 0;
 };
 
-const WalletBalance = ({ wifs }) => {
+const WalletBalance = ({ addresses }) => {
     const [balance, setBalance] = useState(-1);
 
-    fetchUtxos({ addresses: addressesFromWifs(wifs) })
-        .then((response) => {
-            const newBalance = calculateBalance(response.data);
-            setBalance(newBalance);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+    if (balance < 0) {
+        fetchUtxos({ addresses })
+            .then((response) => {
+                const newBalance = calculateBalance(response.data);
+                setBalance(newBalance);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
 
     return (
         <div>
@@ -31,7 +32,7 @@ const WalletBalance = ({ wifs }) => {
 };
 
 const mapStateToProps = (state) => ({
-    wifs: state.wallet.wifs,
+    addresses: state.wallet.addresses,
 });
 
 export default connect(mapStateToProps)(WalletBalance);

@@ -25,7 +25,7 @@ const WalletBalance = ({ addresses }) => {
         <div>
             <Container fluid={true} className="text-center">
                 <h2>Balance</h2>
-                <h3>{balance < 0 ? 'Loading...' : balance}</h3>
+                <h3>{balance < 0 ? 'Loading...' : `${balance} BTC`}</h3>
                 <Link
                     id="action-fund"
                     className="btn btn-success btn-sm"

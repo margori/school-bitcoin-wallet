@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { postSaveWif } from '../../endpoints/Wallet';
-import { addWif } from '../../redux/wallet/walletActions';
+import { addAddress } from '../../redux/wallet/walletActions';
 import { createWif, addressFromWif } from '../../utils/addressUtils';
 import CryptoJS from 'crypto-js';
 
@@ -19,11 +19,12 @@ const WalletNewAddress = ({ password, dispatchAddAddress }) => {
         saveWif(newWif, password)
             .then(() => {
                 const newAddress = addressFromWif(newWif);
+                console.log(newAddress);
                 dispatchAddAddress(newAddress);
                 navigate('/wallet/addresses', { replace: true });
             })
-            .catch(() => {
-                navigate('/wallet/unlock', { replace: true });
+            .catch((e) => {
+                console.error(e);
             });
     } else {
         useEffect(() => {

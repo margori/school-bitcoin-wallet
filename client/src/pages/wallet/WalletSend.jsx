@@ -7,6 +7,7 @@ import { WalletSendForm } from './WalletSendForm';
 import { getWifs } from '../../endpoints/Wallet';
 import { fetchUtxos } from '../../endpoints/Node';
 import CryptoJS from 'crypto-js';
+import { addressesFromWifs } from '../../utils/addressUtils';
 const bitcore = require('bitcore-lib');
 
 const doSend = async (addresses, password, values) => {
@@ -29,7 +30,6 @@ const doSend = async (addresses, password, values) => {
     const unspentOutputs = utxos.map(
         (utxo) => new bitcore.Transaction.UnspentOutput(utxo)
     );
-
     response = await getWifs();
     const safeWifs = response.data.data;
     const wifs = safeWifs.map((safeWif) => {
@@ -37,7 +37,7 @@ const doSend = async (addresses, password, values) => {
             CryptoJS.enc.Utf8
         );
     });
-    const privatekeys = wifs.map((wif) =>
+    const privateKeys = wifs.map((wif) =>
         bitcore.PrivateKey.fromWIF(wif, bitcore.Networks.regtest)
     );
 
@@ -45,16 +45,11 @@ const doSend = async (addresses, password, values) => {
         .from(unspentOutputs) // Feed information about what unspent outputs one can use
         .to(toAddress, bitcore.Unit.fromBTC(amount).toSatoshis()) // Add an output with the given amount of satoshis
         .fee(bitcore.Unit.fromBTC(fee).toSatoshis())
-        .change(changeAddress); // Sets up a change address where the rest of the funds will go
+        .change(changeAddress)
+        .sign(privateKeys);
+
     console.log('transaction.toObject()');
     console.log(transaction.toObject());
-
-    const sign1 = transaction.getSignatures(privatekeys[0]);
-    console.log('sign1');
-    console.log(sign1.toString());
-
-    console.log('isFullySigned');
-    console.log(transaction.isFullySigned());
 };
 
 const WalletSend = ({ addresses, password }) => {
@@ -75,11 +70,12 @@ const WalletSend = ({ addresses, password }) => {
 
         doSend(addresses, password, values)
             .then(() => {
-                actions.setSubmitting(false);
+                console.log('success');
             })
             .catch((e) => {
                 console.error(e);
             });
+        actions.setSubmitting(false);
     };
 
     return (

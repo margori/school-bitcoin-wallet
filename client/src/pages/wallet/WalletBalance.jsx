@@ -22,19 +22,17 @@ const WalletBalance = ({ addresses }) => {
     }
 
     return (
-        <div>
-            <Container fluid={true} className="text-center">
-                <h2>Balance</h2>
-                <h3>{balance < 0 ? 'Loading...' : `${balance} BTC`}</h3>
-                <Link
-                    id="action-fund"
-                    className="btn btn-success btn-sm"
-                    to="/wallet/fund"
-                >
-                    Fund
-                </Link>
-            </Container>
-        </div>
+        <Container fluid={true} className="text-center">
+            <h2>Balance</h2>
+            <h3>{balance < 0 ? 'Loading...' : `${balance} BTC`}</h3>
+            <Link
+                id="action-fund"
+                className="btn btn-success btn-sm"
+                to="/wallet/fund"
+            >
+                Fund
+            </Link>
+        </Container>
     );
 };
 

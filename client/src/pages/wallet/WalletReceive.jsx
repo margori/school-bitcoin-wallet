@@ -20,15 +20,13 @@ const WalletReceive = ({ addresses }) => {
     }
 
     return (
-        <div>
-            <Container fluid={true} className="text-center">
-                <h2>Receive</h2>
-                <br />
-                <h3>{address}</h3>
-                <br />
-                {address && <QRCode value={uriString} />}
-            </Container>
-        </div>
+        <Container fluid={true} className="text-center">
+            <h2>Receive</h2>
+            <br />
+            <h3>{address}</h3>
+            <br />
+            {address && <QRCode value={uriString} />}
+        </Container>
     );
 };
 
